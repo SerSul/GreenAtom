@@ -1,4 +1,3 @@
-# Этап кэширования зависимостей
 FROM maven:3.8.4 as cache
 WORKDIR /app
 COPY pom.xml .
