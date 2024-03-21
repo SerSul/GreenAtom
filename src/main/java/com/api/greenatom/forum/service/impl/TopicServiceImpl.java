@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,22 +39,24 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public TopicResponseDTO createTopic(TopicRequestDTO topicRequestDTO) {
-        Topic topic = new Topic();
+
+        User user = userService.getCurrentUser();
+
+        // Поиск существующего топика по названию
+        Optional<Topic> existingTopic = Optional.ofNullable(topicRepository.findByTitle(topicRequestDTO.getTitle()));
+
+        Topic topic;
+        if (existingTopic.isPresent()) {
+            topic = existingTopic.get();
+        } else {
+            topic = new Topic();
+            topic.setTitle(topicRequestDTO.getTitle());
+        }
         topic.setTitle(topicRequestDTO.getTitle());
         Message message = new Message();
-
-        String username = userService.getCurrentUser().getUsername();
-
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден: " + username));
-
         message.setUser(user);
         message.setText(topicRequestDTO.getMessage());
-
-        List<Message> messages = new ArrayList<>();
-        messages.add(message);
-
-        topic.setMessages(messages);
+        topic.getMessages().add(message);
 
         Topic savedTopic = topicRepository.save(topic);
 
