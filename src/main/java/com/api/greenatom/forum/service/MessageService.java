@@ -10,7 +10,7 @@ import java.util.List;
 public interface MessageService {
     MessageResponseDTO createMessage(Long topicId, MessageRequestDTO message);
     MessageResponseDTO updateMessage(Long id, MessageRequestDTO messageDetails) throws AccessDeniedException;
-    void deleteMessage(Long id);
+    void deleteMessage(Long id) throws AccessDeniedException;
     Message getMessageById(Long id);
     List<Message> getMessagesByTopicId(Long topicId);
 

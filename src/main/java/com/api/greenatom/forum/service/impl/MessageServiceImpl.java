@@ -62,9 +62,15 @@ public class MessageServiceImpl implements MessageService {
 
 
     @Override
-    public void deleteMessage(Long id) {
-        Message message = messageRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Message not found for this id :: " + id));
+    public void deleteMessage(Long messageId) throws AccessDeniedException {
+        User user = userService.getCurrentUser();
+        Message message = messageRepository.findById(messageId)
+                .orElseThrow(() -> new ResourceNotFoundException("Message not found for this id :: " + messageId));
+
+        if (!message.getUser().getId().equals(user.getId())) {
+            throw new AccessDeniedException("User not authorized to delete this message");
+        }
+
         messageRepository.delete(message);
     }
 

@@ -69,6 +69,14 @@ public class TopicController {
         return ResponseEntity.ok(updatedMessage);
     }
 
+    @DeleteMapping("/messages/{messageId}/delete")
+    public ResponseEntity<Map<String, String>> deleteMessage(@PathVariable Long messageId) throws AccessDeniedException {
+        messageService.deleteMessage(messageId);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Message with ID " + messageId + " has been deleted.");
+        return ResponseEntity.ok(response);
+    }
+
 
 
 
