@@ -4,6 +4,7 @@ import com.api.greenatom.forum.dto.request.MessageRequestDTO;
 import com.api.greenatom.forum.dto.response.MessageResponseDTO;
 import com.api.greenatom.security.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Hidden
 public class Message {
 
     @Id

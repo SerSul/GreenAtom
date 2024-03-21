@@ -1,6 +1,7 @@
 package com.api.greenatom.forum;
 
 import com.api.greenatom.forum.exception.TopicAlreadyExistsException;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
+@Hidden
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(TopicAlreadyExistsException.class)

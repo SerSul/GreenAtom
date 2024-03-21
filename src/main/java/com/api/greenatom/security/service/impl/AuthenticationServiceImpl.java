@@ -7,6 +7,7 @@ import com.api.greenatom.security.entity.*;
 import com.api.greenatom.security.service.AuthenticationService;
 import com.api.greenatom.security.service.JwtService;
 import com.api.greenatom.security.service.UserService;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Hidden
 public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserService userService;
     private final JwtService jwtService;

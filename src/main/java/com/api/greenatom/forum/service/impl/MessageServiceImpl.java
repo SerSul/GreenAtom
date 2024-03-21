@@ -10,6 +10,7 @@ import com.api.greenatom.forum.service.MessageService;
 import com.api.greenatom.security.entity.User;
 import com.api.greenatom.security.service.UserService;
 import com.api.greenatom.security.service.impl.UserServiceImpl;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @Service
+@Hidden
 public class MessageServiceImpl implements MessageService {
 
     private final MessageRepository messageRepository;

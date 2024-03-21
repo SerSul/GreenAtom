@@ -1,5 +1,6 @@
 package com.api.greenatom.security.entity;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
+@Hidden
 public class User implements UserDetails {
     @Id
     @Column(name = "id")

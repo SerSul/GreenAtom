@@ -12,6 +12,7 @@ import com.api.greenatom.security.entity.User;
 import com.api.greenatom.security.repository.UserRepository;
 import com.api.greenatom.security.service.UserService;
 import com.api.greenatom.security.service.impl.UserServiceImpl;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +27,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Hidden
 public class TopicServiceImpl implements TopicService {
 
     private final TopicRepository topicRepository;

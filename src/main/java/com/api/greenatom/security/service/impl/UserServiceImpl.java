@@ -4,6 +4,7 @@ import com.api.greenatom.security.entity.Role;
 import com.api.greenatom.security.entity.User;
 import com.api.greenatom.security.repository.UserRepository;
 import com.api.greenatom.security.service.UserService;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Hidden
 public class UserServiceImpl implements UserService {
     private final UserRepository repository;
 

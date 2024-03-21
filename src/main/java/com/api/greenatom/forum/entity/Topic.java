@@ -2,6 +2,7 @@ package com.api.greenatom.forum.entity;
 
 import com.api.greenatom.forum.dto.response.MessageResponseDTO;
 import com.api.greenatom.forum.dto.response.TopicResponseDTO;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Hidden
 public class Topic {
     public Topic(Long id, String title) {
         this.id = id;
