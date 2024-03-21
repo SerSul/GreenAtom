@@ -5,6 +5,7 @@ import com.api.greenatom.forum.dto.response.MessageResponseDTO;
 import com.api.greenatom.forum.dto.response.TopicResponseDTO;
 import com.api.greenatom.forum.entity.Message;
 import com.api.greenatom.forum.entity.Topic;
+import com.api.greenatom.forum.exception.TopicAlreadyExistsException;
 import com.api.greenatom.forum.repository.TopicRepository;
 import com.api.greenatom.forum.service.TopicService;
 import com.api.greenatom.security.entity.User;
@@ -42,8 +43,12 @@ public class TopicServiceImpl implements TopicService {
     public TopicResponseDTO createTopic(TopicRequestDTO topicRequestDTO) {
         User user = userService.getCurrentUser();
 
-        Topic topic = Optional.ofNullable(topicRepository.findByTitle(topicRequestDTO.getTitle()))
-                .orElseGet(() -> new Topic(null, topicRequestDTO.getTitle()));
+        if (topicRepository.findByTitle(topicRequestDTO.getTitle()) != null) {
+            throw new TopicAlreadyExistsException("Топик с таким названием уже существует: " + topicRequestDTO.getTitle());
+        }
+
+        Topic topic = new Topic();
+        topic.setTitle(topicRequestDTO.getTitle());
 
         Message message = new Message();
         message.setUser(user);
@@ -61,7 +66,7 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public Topic updateTopic(Long id, Topic topicDetails) {
         Topic topic = topicRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Topic not found for this id :: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Топика с таким id не найдено :: " + id));
         topic.setTitle(topicDetails.getTitle());
         // Обновите другие поля при необходимости
         return topicRepository.save(topic);
@@ -70,14 +75,14 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public void deleteTopic(Long id) {
         Topic topic = topicRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Topic not found for this id :: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Топика с таким id не найдено :: " + id));
         topicRepository.delete(topic);
     }
 
     @Override
     public Topic getTopicById(Long id) {
         return topicRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Topic not found for this id :: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Топика с таким id не найдено :: " + id));
     }
 
     @Override

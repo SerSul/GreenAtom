@@ -1,5 +1,6 @@
 package com.api.greenatom.forum.entity;
 
+import com.api.greenatom.forum.dto.request.MessageRequestDTO;
 import com.api.greenatom.forum.dto.response.MessageResponseDTO;
 import com.api.greenatom.security.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -40,7 +41,12 @@ public class Message {
 
 
 
-
+    /**
+     * Создает новый экземпляр MessageResponseDTO на основе Message.
+     *
+     * @param message Сообщение для DTO.
+     * @return Новый экземпляр MessageResponseDTO.
+     */
     public static MessageResponseDTO messageToDTO(Message message) {
         return new MessageResponseDTO(
                 message.getId(),
@@ -48,5 +54,23 @@ public class Message {
                 message.getUser().getUsername(),
                 message.getCreationDate()
         );
+    }
+
+
+    /**
+     * Создает новый экземпляр Message на основе DTO и пользователя.
+     *
+     * @param requestDTO DTO для сообщения.
+     * @param user Пользователь, отправивший сообщение.
+     * @param topicId Идентификатор топика, к которому принадлежит сообщение.
+     * @return Новый экземпляр Message.
+     */
+    public static Message messageFromDTO(MessageRequestDTO requestDTO, User user, Long topicId) {
+        Message message = new Message();
+        message.setText(requestDTO.getText());
+        message.setUser(user);
+        message.setTopicId(topicId);
+        message.setCreationDate(LocalDateTime.now());
+        return message;
     }
 }
