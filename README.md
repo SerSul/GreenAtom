@@ -56,7 +56,7 @@
 
 Для удобства работы и тестирования API предоставляется Swagger UI.
 
-- **URL**: `http://localhost:8080/swagger-ui.html`
+- **URL**: `http://localhost:8080/swagger-ui/index.html`
 
 ## Docker
 
