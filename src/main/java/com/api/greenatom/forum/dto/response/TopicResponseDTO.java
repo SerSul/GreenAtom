@@ -8,6 +8,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class TopicResponseDTO {
+
+    private Long id;
     private String title;
 
     List<MessageResponseDTO> messages;

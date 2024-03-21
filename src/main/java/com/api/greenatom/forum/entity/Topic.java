@@ -33,9 +33,9 @@ public class Topic {
 
     public TopicResponseDTO toTopicResponseDTO() {
         List<MessageResponseDTO> messageResponseDTOs = this.messages.stream()
-                .map(message -> new MessageResponseDTO(message.getText(), message.getUser().getUsername(), message.getCreationDate()))
+                .map(message -> new MessageResponseDTO(message.getId(),message.getText(), message.getUser().getUsername(), message.getCreationDate()))
                 .collect(Collectors.toList());
-        return new TopicResponseDTO(this.title, messageResponseDTOs);
+        return new TopicResponseDTO(this.id ,this.title, messageResponseDTOs);
     }
 
 
