@@ -21,7 +21,7 @@ public class TopicController {
     }
 
     @GetMapping("/getAllTopics")
-    public List<Topic> getAllTopics() {
+    public List<TopicResponseDTO> getAllTopics() {
         return topicService.getAllTopics();
     }
 

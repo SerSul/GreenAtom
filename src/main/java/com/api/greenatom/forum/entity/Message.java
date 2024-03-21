@@ -1,18 +1,20 @@
 package com.api.greenatom.forum.entity;
 
+import com.api.greenatom.forum.dto.response.MessageResponseDTO;
 import com.api.greenatom.security.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Message {
 
     @Id
@@ -36,4 +38,14 @@ public class Message {
 
     private Long topicId;
 
+
+
+
+    public static MessageResponseDTO messageToDTO(Message message) {
+        return new MessageResponseDTO(
+                message.getText(),
+                message.getUser().getUsername(),
+                message.getCreationDate()
+        );
+    }
 }

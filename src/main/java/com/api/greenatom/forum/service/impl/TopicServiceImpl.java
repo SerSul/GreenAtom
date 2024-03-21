@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -39,20 +40,11 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public TopicResponseDTO createTopic(TopicRequestDTO topicRequestDTO) {
-
         User user = userService.getCurrentUser();
 
-        // Поиск существующего топика по названию
-        Optional<Topic> existingTopic = Optional.ofNullable(topicRepository.findByTitle(topicRequestDTO.getTitle()));
+        Topic topic = Optional.ofNullable(topicRepository.findByTitle(topicRequestDTO.getTitle()))
+                .orElseGet(() -> new Topic(null, topicRequestDTO.getTitle()));
 
-        Topic topic;
-        if (existingTopic.isPresent()) {
-            topic = existingTopic.get();
-        } else {
-            topic = new Topic();
-            topic.setTitle(topicRequestDTO.getTitle());
-        }
-        topic.setTitle(topicRequestDTO.getTitle());
         Message message = new Message();
         message.setUser(user);
         message.setText(topicRequestDTO.getMessage());
@@ -60,12 +52,11 @@ public class TopicServiceImpl implements TopicService {
 
         Topic savedTopic = topicRepository.save(topic);
 
-        List<MessageResponseDTO> messageResponseDTOs = savedTopic.getMessages().stream()
-                .map(MessageServiceImpl::messageToDTO)
-                .collect(Collectors.toList());
-
-        return new TopicResponseDTO(savedTopic.getTitle(), messageResponseDTOs);
+        return savedTopic.toTopicResponseDTO();
     }
+
+
+
 
     @Override
     public Topic updateTopic(Long id, Topic topicDetails) {
@@ -90,7 +81,13 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public List<Topic> getAllTopics() {
-        return topicRepository.findAll();
+    public List<TopicResponseDTO> getAllTopics() {
+        List<Topic> topics = topicRepository.findAll();
+        // Преобразовываем список топиков в список DTO
+        List<TopicResponseDTO> topicResponseDTOS = topics.stream()
+                .map(Topic::toTopicResponseDTO)
+                .collect(Collectors.toList());
+        return topicResponseDTOS;
     }
+
 }
