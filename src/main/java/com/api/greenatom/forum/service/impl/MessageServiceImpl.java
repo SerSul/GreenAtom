@@ -62,8 +62,7 @@ public class MessageServiceImpl implements MessageService {
         return new MessageResponseDTO(
                 message.getText(),
                 message.getUser().getUsername(),
-                message.getCreationDate(),
-                message.getTopicId()
+                message.getCreationDate()
         );
     }
 }
