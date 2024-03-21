@@ -32,6 +32,12 @@ public class TopicServiceImpl implements TopicService {
     private final UserRepository userRepository;
     private final UserService userService;
 
+    /**
+     * Конструктор для сервиса топиков.
+     * @param topicRepository репозиторий для взаимодействия с топиками.
+     * @param userRepository репозиторий для взаимодействия с пользователями.
+     * @param userService сервис для работы с пользователями.
+     */
     @Autowired
     public TopicServiceImpl(TopicRepository topicRepository, UserRepository userRepository, UserServiceImpl userService) {
         this.topicRepository = topicRepository;
@@ -39,6 +45,12 @@ public class TopicServiceImpl implements TopicService {
         this.userService = userService;
     }
 
+    /**
+     * Создает новый топик с начальным сообщением.
+     * @param topicRequestDTO DTO для создания топика.
+     * @return DTO созданного топика.
+     * @throws TopicAlreadyExistsException если топик с таким названием уже существует.
+     */
     @Override
     public TopicResponseDTO createTopic(TopicRequestDTO topicRequestDTO) {
         User user = userService.getCurrentUser();
@@ -61,8 +73,13 @@ public class TopicServiceImpl implements TopicService {
     }
 
 
-
-
+    /**
+     * Обновляет существующий топик.
+     * @param id Идентификатор топика, который нужно обновить.
+     * @param topicDetails Обновленные данные топика.
+     * @return Обновленный топик.
+     * @throws ResourceNotFoundException если топик с указанным id не найден.
+     */
     @Override
     public Topic updateTopic(Long id, Topic topicDetails) {
         Topic topic = topicRepository.findById(id)
@@ -72,6 +89,11 @@ public class TopicServiceImpl implements TopicService {
         return topicRepository.save(topic);
     }
 
+    /**
+     * Удаляет топик по идентификатору.
+     * @param id Идентификатор топика для удаления.
+     * @throws ResourceNotFoundException если топик с указанным id не найден.
+     */
     @Override
     public void deleteTopic(Long id) {
         Topic topic = topicRepository.findById(id)
@@ -79,12 +101,21 @@ public class TopicServiceImpl implements TopicService {
         topicRepository.delete(topic);
     }
 
+    /**
+     * Возвращает топик по его идентификатору.
+     * @param id Идентификатор топика.
+     * @return Топик.
+     * @throws ResourceNotFoundException если топик с указанным id не найден.
+     */
     @Override
     public Topic getTopicById(Long id) {
         return topicRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Топика с таким id не найдено :: " + id));
     }
-
+    /**
+     * Возвращает список всех топиков.
+     * @return Список DTO топиков.
+     */
     @Override
     public List<TopicResponseDTO> getAllTopics() {
         List<Topic> topics = topicRepository.findAll();

@@ -24,6 +24,13 @@ public class MessageServiceImpl implements MessageService {
     private final TopicRepository topicRepository;
     private final UserService userService;
 
+    /**
+     * Конструктор для сервиса сообщений.
+     *
+     * @param messageRepository репозиторий для работы с сообщениями
+     * @param topicRepository репозиторий для работы с топиками
+     * @param userService сервис для работы с пользователями
+     */
     @Autowired
     public MessageServiceImpl(MessageRepository messageRepository, TopicRepository topicRepository, UserServiceImpl userService) {
         this.messageRepository = messageRepository;
@@ -31,6 +38,13 @@ public class MessageServiceImpl implements MessageService {
         this.userService = userService;
     }
 
+    /**
+     * Создает и сохраняет новое сообщение в указанном топике.
+     *
+     * @param topicId идентификатор топика
+     * @param messageDTO DTO сообщения
+     * @return DTO созданного сообщения
+     */
     @Override
     public MessageResponseDTO createMessage(Long topicId, MessageRequestDTO messageDTO) {
         User user = userService.getCurrentUser();
@@ -44,6 +58,14 @@ public class MessageServiceImpl implements MessageService {
         return Message.messageToDTO(savedMessage);
     }
 
+    /**
+     * Обновляет текст сообщения.
+     *
+     * @param messageId идентификатор сообщения для обновления
+     * @param messageDTO DTO с новым текстом сообщения
+     * @return DTO обновленного сообщения
+     * @throws AccessDeniedException если текущий пользователь не автор сообщения
+     */
     @Override
     public MessageResponseDTO updateMessage(Long messageId, MessageRequestDTO messageDTO) throws AccessDeniedException {
         User user = userService.getCurrentUser();
@@ -60,7 +82,12 @@ public class MessageServiceImpl implements MessageService {
         return Message.messageToDTO(updatedMessage);
     }
 
-
+    /**
+     * Удаляет сообщение по его идентификатору.
+     *
+     * @param messageId идентификатор сообщения для удаления
+     * @throws AccessDeniedException если текущий пользователь не автор сообщения
+     */
     @Override
     public void deleteMessage(Long messageId) throws AccessDeniedException {
         User user = userService.getCurrentUser();
@@ -74,12 +101,23 @@ public class MessageServiceImpl implements MessageService {
         messageRepository.delete(message);
     }
 
+    /**
+     * Возвращает сообщение по его идентификатору.
+     *
+     * @param id идентификатор сообщения
+     * @return сообщение
+     */
     @Override
     public Message getMessageById(Long id) {
         return messageRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Message not found for this id :: " + id));
     }
-
+    /**
+     * Возвращает все сообщения в указанном топике.
+     *
+     * @param topicId идентификатор топика
+     * @return список сообщений в топике
+     */
     @Override
     public List<Message> getMessagesByTopicId(Long topicId) {
         return messageRepository.findAllByTopicId(topicId);

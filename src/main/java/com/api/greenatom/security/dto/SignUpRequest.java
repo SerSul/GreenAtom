@@ -10,12 +10,12 @@ import lombok.Data;
 @Schema(description = "Запрос на регистрацию")
 public class SignUpRequest {
 
-    @NotBlank(message = "Имя пользователя не может быть пустыми")
+    @NotBlank
     private String username;
 
 
-    @NotBlank(message = "Адрес электронной почты не может быть пустыми")
-    @Email(message = "Email адрес должен быть в формате user@example.com")
+    @NotBlank
+    @Email
     private String email;
 
 

@@ -9,9 +9,9 @@ import lombok.Data;
 @Schema(description = "Запрос на аутентификацию")
 public class SignInRequest {
 
-    @NotBlank(message = "Имя пользователя не может быть пустыми")
+    @NotBlank
     private String username;
 
-    @NotBlank(message = "Пароль не может быть пустыми")
+    @NotBlank
     private String password;
 }
