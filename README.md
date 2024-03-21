@@ -14,19 +14,29 @@
 
 - **URL**: `http://localhost:8080/h2-console`
 - **Логин**: `sa`
-- **Пароль**: `password`
+- **Пароль**: *(оставьте поле пустым, если не настраивали)*
+
+## Авторизация
+
+Для выполнения некоторых операций необходима предварительная регистрация и авторизация пользователя.
+
+### Эндпоинты аутентификации:
+- **Регистрация пользователя**: `POST /auth/sign-up`
+- **Авторизация пользователя**: `POST /auth/sign-in`
+
+После успешной авторизации пользователь получает JWT токен, который необходимо использовать для доступа к защищенным эндпоинтам.
 
 ## Эндпоинты
 
 ### Топики
-- **Получить все топики**: `GET /api/topics/getAllTopics`
-- **Создать топик**: `POST /api/topics/createTopic`
+- **Получить все топики**: `GET /api/topics/getAllTopics` *(требуется авторизация)*
+- **Создать топик**: `POST /api/topics/createTopic` *(требуется авторизация)*
 
 ### Сообщения
-- **Получить сообщения в топике**: `GET /api/topics/{topicId}/messages`
-- **Создать сообщение в топике**: `POST /api/topics/{topicId}/createMessage`
-- **Обновить сообщение**: `PUT /api/topics/messages/{messageId}/update`
-- **Удалить сообщение**: `DELETE /api/topics/messages/{messageId}/delete`
+- **Получить сообщения в топике**: `GET /api/topics/{topicId}/messages` *(требуется авторизация)*
+- **Создать сообщение в топике**: `POST /api/topics/{topicId}/createMessage` *(требуется авторизация)*
+- **Обновить сообщение**: `PUT /api/topics/messages/{messageId}/update` *(требуется авторизация)*
+- **Удалить сообщение**: `DELETE /api/topics/messages/{messageId}/delete` *(требуется авторизация)*
 
 ## Swagger UI
 
